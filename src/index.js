@@ -8,7 +8,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 200 },
+      // gravity: { y: 200 },
       debug: true
 
     }
@@ -27,19 +27,27 @@ const initialBirdPosition = {
 }
 
 let bird = null
+let upperPipe = null
+let lowerPipe = null
 let flapVelocity = 250
 
 new Phaser.Game(config);
 
 
 function preload() {
-  this.load.image('sky', 'assets/sky.png');
+  this.load.image('sky', 'assets/sky.png')
   this.load.image('bird', 'assets/bird.png')
+  this.load.image('pipe', 'assets/pipe.png')
 }
 
 function create() {
   this.add.image(0, 0, 'sky').setOrigin(0)
+  
   bird = this.physics.add.sprite(initialBirdPosition.x, initialBirdPosition.y, 'bird').setOrigin(0)
+  bird.body.gravity.y = 400
+
+  upperPipe = this.physics.add.sprite(400, 100, 'pipe').setOrigin(0, 1)
+  lowerPipe = this.physics.add.sprite(400, upperPipe.y + 100, 'pipe').setOrigin(0, 0)
   this.input.on('pointerdown', flap)
 }
 
