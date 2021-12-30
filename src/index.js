@@ -70,6 +70,8 @@ function update() {
     console.log('game over')
     restartBirdPosition()
   }
+
+  recyclePipes()
 }
 
 function placePipe(upperPipe, lowerPipe) {
@@ -85,6 +87,19 @@ function placePipe(upperPipe, lowerPipe) {
   lowerPipe.x = upperPipe.x
   lowerPipe.y = upperPipe.y + pipeVerticalDistance
 
+}
+
+function recyclePipes(){
+  const tempPipes = []
+
+  pipes.getChildren().forEach(pipe => {
+    if (pipe.getBounds().right <= 0) {
+      tempPipes.push(pipe)
+      if (tempPipes.length === 2) {
+        placePipe(...tempPipes)
+      }
+    }
+  })
 }
 
 function getRightMostPipe() {
