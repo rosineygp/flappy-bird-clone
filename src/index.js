@@ -8,21 +8,54 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 200 }
+      gravity: { y: 200 },
+      debug: true
+
     }
   },
   scene: {
     preload: preload,
-    create: create
+    create: create,
+    update: update
   }
 };
 
-new Phaser.Game(config);
-
-function preload () {
-  this.load.image('sky', 'assets/sky.png');
+const VELOCITY = 200
+const initialBirdPosition = {
+  x: config.width / 10,
+  y: config.height / 2
 }
 
-function create () {
-  this.add.image(400, 300, 'sky');
+let bird = null
+let flapVelocity = 250
+
+new Phaser.Game(config);
+
+
+function preload() {
+  this.load.image('sky', 'assets/sky.png');
+  this.load.image('bird', 'assets/bird.png')
+}
+
+function create() {
+  this.add.image(0, 0, 'sky').setOrigin(0)
+  bird = this.physics.add.sprite(initialBirdPosition.x, initialBirdPosition.y, 'bird').setOrigin(0)
+  this.input.on('pointerdown', flap)
+}
+
+function update(){
+  if (bird.y > config.height || bird.y < 0 - bird.height) {
+    console.log('game over')
+    restartBirdPosition()
+  }
+}
+
+function restartBirdPosition() {
+  bird.x = initialBirdPosition.x
+  bird.y = initialBirdPosition.y
+  bird.body.velocity.y = 0
+}
+
+function flap() {
+  bird.body.velocity.y = -flapVelocity
 }
