@@ -1,10 +1,21 @@
 import Phaser from "phaser";
-import PlayScene from "./scenes/PlayScene";
+import PlayScene from "./scenes/PlayScene"
+
+const WIDHT = 800
+const HEIGHT = 600
+const BIRD_POSITION = {
+  x: HEIGHT * 0.1,
+  y: HEIGHT / 2
+}
+const SHARED_CONFIG = {
+  width: WIDHT,
+  height: HEIGHT,
+  startPosition: BIRD_POSITION
+}
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  ...SHARED_CONFIG,
   physics: {
     default: 'arcade',
     arcade: {
@@ -13,7 +24,7 @@ const config = {
 
     }
   },
-  scene: [PlayScene]
+  scene: [new PlayScene(SHARED_CONFIG)]
 };
 
 const VELOCITY = 200
