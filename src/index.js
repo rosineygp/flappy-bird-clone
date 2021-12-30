@@ -20,7 +20,8 @@ const config = {
   }
 };
 
-const VELOCITY = 400
+const VELOCITY = 200
+const PIPES_TO_RENDER = 4
 const flapVelocity = 250
 const pipeVerticalDistanceRange = [150, 250]
 const initialBirdPosition = {
@@ -32,9 +33,9 @@ let bird = null
 
 let upperPipe = null
 let lowerPipe = null
+let pipeHorizontalDistance = 0
 
-let pipeVerticalDistance = Phaser.Math.Between(...pipeVerticalDistanceRange)
-let pipeVerticalPosition = Phaser.Math.Between(0 + 20, config.height - 20 - pipeVerticalDistance)
+
 
 new Phaser.Game(config);
 
@@ -48,10 +49,21 @@ function create() {
   this.add.image(0, 0, 'sky').setOrigin(0)
   
   bird = this.physics.add.sprite(initialBirdPosition.x, initialBirdPosition.y, 'bird').setOrigin(0)
-  bird.body.gravity.y = VELOCITY
+  bird.body.gravity.y = 400
 
-  upperPipe = this.physics.add.sprite(400, pipeVerticalPosition, 'pipe').setOrigin(0, 1)
-  lowerPipe = this.physics.add.sprite(400, upperPipe.y + pipeVerticalDistance, 'pipe').setOrigin(0, 0)
+  for (let i = 0; i < PIPES_TO_RENDER; i++){
+    pipeHorizontalDistance += 400
+    let pipeVerticalDistance = Phaser.Math.Between(...pipeVerticalDistanceRange)
+    let pipeVerticalPosition = Phaser.Math.Between(0 + 20, config.height - 20 - pipeVerticalDistance)
+
+    upperPipe = this.physics.add.sprite(pipeHorizontalDistance, pipeVerticalPosition, 'pipe').setOrigin(0, 1)
+    lowerPipe = this.physics.add.sprite(upperPipe.x, upperPipe.y + pipeVerticalDistance, 'pipe').setOrigin(0, 0)
+
+    upperPipe.body.velocity.x = -VELOCITY
+    lowerPipe.body.velocity.x = -VELOCITY
+  }
+
+
   this.input.on('pointerdown', flap)
 }
 
