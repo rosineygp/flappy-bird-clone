@@ -29,6 +29,7 @@ class PlayScene extends Phaser.Scene {
         this.createBG()
         this.createBird()
         this.createPipes()
+        this.createColliders()
         this.handleInputs()
     }
 
@@ -60,6 +61,10 @@ class PlayScene extends Phaser.Scene {
         this.pipes.setVelocityX(-200)
     }
 
+    createColliders() {
+        this.physics.add.collider(this.bird, this.pipes, this.gameOver, null, this)
+    }
+
     handleInputs() {
         this.input.on('pointerdown', this.flap, this)
     }
@@ -67,7 +72,7 @@ class PlayScene extends Phaser.Scene {
     checkGameStatus() {
         if (this.bird.y > this.config.height || this.bird.y < -this.bird.height) {
             console.log('game over')
-            this.restartBirdPosition()
+            this.gameOver()
         }
     }
 
@@ -108,7 +113,7 @@ class PlayScene extends Phaser.Scene {
         return rightMostX
     }
 
-    restartBirdPosition() {
+    gameOver() {
         this.bird.x = this.config.startPosition.x
         this.bird.y = this.config.startPosition.y
         this.bird.body.velocity.y = 0
