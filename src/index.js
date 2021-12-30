@@ -1,5 +1,5 @@
-
 import Phaser from "phaser";
+import PlayScene from "./scenes/PlayScene";
 
 const config = {
   type: Phaser.AUTO,
@@ -13,11 +13,7 @@ const config = {
 
     }
   },
-  scene: {
-    preload: preload,
-    create: create,
-    update: update
-  }
+  scene: [PlayScene]
 };
 
 const VELOCITY = 200
@@ -76,11 +72,11 @@ function update() {
 
 function placePipe(upperPipe, lowerPipe) {
   const rightMostX = getRightMostPipe()
-  
+
   const pipeVerticalDistance = Phaser.Math.Between(...pipeVerticalDistanceRange)
   const pipeVerticalPosition = Phaser.Math.Between(0 + 20, config.height - 20 - pipeVerticalDistance)
   const pipeHorizontalDistance = Phaser.Math.Between(...pipeHorizontalDistanceRange)
-  
+
   upperPipe.x = rightMostX + pipeHorizontalDistance
   upperPipe.y = pipeVerticalPosition
 
@@ -89,7 +85,7 @@ function placePipe(upperPipe, lowerPipe) {
 
 }
 
-function recyclePipes(){
+function recyclePipes() {
   const tempPipes = []
 
   pipes.getChildren().forEach(pipe => {
@@ -105,7 +101,7 @@ function recyclePipes(){
 function getRightMostPipe() {
   let rightMostX = 0
 
-  pipes.getChildren().forEach(function(pipe) {
+  pipes.getChildren().forEach(function (pipe) {
     rightMostX = Math.max(pipe.x, rightMostX)
   })
 
