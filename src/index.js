@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser, { Scale } from "phaser";
 import PlayScene from "./scenes/PlayScene"
 
 const WIDHT = 800
@@ -16,6 +16,10 @@ const SHARED_CONFIG = {
 const config = {
   type: Phaser.AUTO,
   ...SHARED_CONFIG,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
+  },
   physics: {
     default: 'arcade',
     arcade: {
