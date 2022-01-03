@@ -1,4 +1,5 @@
 import Phaser, { Scale } from "phaser";
+import PreloadScene from "./scenes/PreloadScene"
 import PlayScene from "./scenes/PlayScene"
 import MenuScene from "./scenes/MenuScene"
 
@@ -29,7 +30,9 @@ const config = {
 
     }
   },
-  scene: [new MenuScene(SHARED_CONFIG), new PlayScene(SHARED_CONFIG)]
+  scene: [PreloadScene,
+    new MenuScene(SHARED_CONFIG),
+    new PlayScene(SHARED_CONFIG)]
 };
 
 new Phaser.Game(config);
