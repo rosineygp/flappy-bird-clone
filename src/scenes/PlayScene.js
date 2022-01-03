@@ -79,14 +79,20 @@ class PlayScene extends Phaser.Scene {
     createScore() {
         this.score = 0
         const bestScore = localStorage.getItem('bestScore')
-        this.scoreText = this.add.text(16, 16, `Score: ${0}`, { fontSize: '32px', fill: '#000'})
-        this.scoreBestText = this.add.text(16, 52, `Best Score: ${bestScore || 0}`, { fontSize: '18px', fill: '#000'})
+        this.scoreText = this.add.text(16, 16, `Score: ${0}`, { fontSize: '32px', fill: '#000' })
+        this.scoreBestText = this.add.text(16, 52, `Best Score: ${bestScore || 0}`, { fontSize: '18px', fill: '#000' })
     }
 
     createPause() {
-        this.add.image(this.config.width - 10, this.config.height - 10, 'pause')
+        const pauseButon = this.add.image(this.config.width - 10, this.config.height - 10, 'pause')
+            .setInteractive()
             .setScale(3)
             .setOrigin(1)
+
+        pauseButon.on('pointerdown', () => {
+            this.physics.pause()
+            this.scene.pause()
+        })
     }
 
     handleInputs() {
@@ -94,7 +100,7 @@ class PlayScene extends Phaser.Scene {
     }
 
     checkGameStatus() {
-        if (this.bird.getBounds().bottom >=  this.config.height || this.bird.y <= 0) {
+        if (this.bird.getBounds().bottom >= this.config.height || this.bird.y <= 0) {
             // console.log('game over')
             this.gameOver()
         }
