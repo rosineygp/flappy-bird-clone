@@ -19,6 +19,8 @@ class PlayScene extends BaseScene {
 
         this.score = 0
         this.scoreText = ''
+
+        this.isPaused = false
     }
 
     create() {
@@ -73,12 +75,14 @@ class PlayScene extends BaseScene {
     }
 
     createPause() {
+        this.isPaused = false
         const pauseButton = this.add.image(this.config.width - 10, this.config.height - 10, 'pause')
             .setInteractive()
             .setScale(3)
             .setOrigin(1)
 
         pauseButton.on('pointerdown', () => {
+            this.isPaused = true
             this.physics.pause()
             this.scene.pause()
             this.scene.launch('PauseScene')
@@ -94,7 +98,7 @@ class PlayScene extends BaseScene {
         if (this.pauseEvent) {
             return
         }
-        
+
         this.pauseEvent = this.events.on('resume', () => {
             this.initialTime = 3
             this.countDownText = this.add.text(...this.screenCenter, `Fly in: ${this.initialTime}`, this.fontOptions)
@@ -116,6 +120,7 @@ class PlayScene extends BaseScene {
             this.countDownText.setText('')
             this.physics.resume()
             this.timeEvent.remove()
+            this.isPaused = false
         }
     }
 
@@ -191,7 +196,9 @@ class PlayScene extends BaseScene {
     }
 
     flap(bird) {
-        this.bird.body.velocity.y = -this.flapVelocity
+        if (!this.isPaused){
+            this.bird.body.velocity.y = -this.flapVelocity
+        }
     }
 
     increaseScore() {
