@@ -27,7 +27,7 @@ class PauseScene extends BaseScene {
             .on('pointerup', () => {
                 if (item.scene && item.text === 'Continue') {
                     this.scene.stop()
-                    this.scene.resume()
+                    this.scene.resume('PlayScene')
                 } else {
                     this.scene.stop('PlayScene')
                     this.scene.start(item.scene)

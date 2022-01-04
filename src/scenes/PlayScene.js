@@ -29,6 +29,7 @@ class PlayScene extends BaseScene {
         this.createScore()
         this.createPause()
         this.handleInputs()
+        this.listenToEvents()
     }
 
     update() {
@@ -86,6 +87,22 @@ class PlayScene extends BaseScene {
 
     handleInputs() {
         this.input.on('pointerdown', this.flap, this)
+    }
+
+    listenToEvents() {
+        this.events.on('resume', () => {
+            this.initialTime = 3
+            this.countDownText = this.add.text(...this.screenCenter, `Fly in: ${this.initialTime}`, this.fontOptions)
+                .setOrigin(.5)
+            this.timeEvent = this.time.addEvent({
+                delay: 1000,
+                callback: () => {
+                    console.log(this.initialTime--)
+                },
+                callbackScope: this,
+                loop: true
+            })
+        })
     }
 
     checkGameStatus() {
