@@ -41,7 +41,6 @@ class PlayScene extends BaseScene {
 
     create() {
         super.create()
-        this.currentDifficulty = 'hard'
         this.createBird()
         this.createPipes()
         this.createColliders()
@@ -175,9 +174,20 @@ class PlayScene extends BaseScene {
                     this.placePipe(...tempPipes)
                     this.increaseScore()
                     this.saveBestScore()
+                    this.increaseDifficulty()
                 }
             }
         })
+    }
+
+    increaseDifficulty() {
+        if (this.score === 4) {
+            this.currentDifficulty = 'normal'
+        }
+
+        if (this.score === 8) {
+            this.currentDifficulty = 'hard'
+        }
     }
 
     getRightMostPipe() {
