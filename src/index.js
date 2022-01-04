@@ -30,6 +30,7 @@ const initScenes = () => Scenes.map((Scene) => new Scene(SHARED_CONFIG))
 const config = {
   type: Phaser.AUTO,
   ...SHARED_CONFIG,
+  pixelArt: true,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH
