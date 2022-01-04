@@ -90,19 +90,33 @@ class PlayScene extends BaseScene {
     }
 
     listenToEvents() {
-        this.events.on('resume', () => {
+
+        if (this.pauseEvent) {
+            return
+        }
+        
+        this.pauseEvent = this.events.on('resume', () => {
             this.initialTime = 3
             this.countDownText = this.add.text(...this.screenCenter, `Fly in: ${this.initialTime}`, this.fontOptions)
                 .setOrigin(.5)
             this.timeEvent = this.time.addEvent({
                 delay: 1000,
-                callback: () => {
-                    console.log(this.initialTime--)
-                },
+                callback: this.countDown,
                 callbackScope: this,
                 loop: true
             })
         })
+    }
+
+    countDown() {
+        this.initialTime--
+        this.countDownText.setText(`Fly in: ${this.initialTime}`)
+
+        if (this.initialTime < 1) {
+            this.countDownText.setText('')
+            this.physics.resume()
+            this.timeEvent.remove()
+        }
     }
 
     checkGameStatus() {
