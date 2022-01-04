@@ -14,9 +14,6 @@ class PlayScene extends BaseScene {
         this.flapVelocity = 250
         this.pipes = null
 
-        // this.pipeVerticalDistanceRange = [150, 250]
-        // this.pipeHorizontalDistanceRange = [500, 550]
-
         this.score = 0
         this.scoreText = ''
 
@@ -48,15 +45,6 @@ class PlayScene extends BaseScene {
         this.createPause()
         this.handleInputs()
         this.listenToEvents()
-
-        this.anims.create({
-            key: 'fly',
-            frames: this.anims.generateFrameNumbers('bird', {start: 8, end: 15}),
-            frameRate: 8,
-            repeat: -1
-        })
-
-        this.bird.play('fly')
     }
 
     update() {
@@ -71,8 +59,19 @@ class PlayScene extends BaseScene {
             .setFlipX(true)
             .setScale(3)
             .setOrigin(0)
+
+        this.bird.setBodySize(this.bird.width, this.bird.height - 6)
         this.bird.body.gravity.y = 400
         this.bird.setCollideWorldBounds(true)
+
+        this.anims.create({
+            key: 'fly',
+            frames: this.anims.generateFrameNumbers('bird', {start: 8, end: 15}),
+            frameRate: 8,
+            repeat: -1
+        })
+
+        this.bird.play('fly')
     }
 
     createPipes() {
