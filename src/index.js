@@ -2,6 +2,7 @@ import Phaser, { Scale } from "phaser";
 import PreloadScene from "./scenes/PreloadScene"
 import PlayScene from "./scenes/PlayScene"
 import MenuScene from "./scenes/MenuScene"
+import ScoreScene from "./scenes/ScoreScene";
 
 const WIDHT = 800
 const HEIGHT = 600
@@ -18,7 +19,8 @@ const SHARED_CONFIG = {
 const Scenes = [
   PreloadScene,
   MenuScene,
-  PlayScene
+  PlayScene,
+  ScoreScene
 ]
 
 const initScenes = () => Scenes.map((Scene) => new Scene(SHARED_CONFIG))
