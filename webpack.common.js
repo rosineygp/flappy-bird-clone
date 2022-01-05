@@ -38,6 +38,7 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, 'build'),
     compress: true,
+    host: '0.0.0.0',
     port: 8080,
   },
   plugins: [
@@ -46,13 +47,18 @@ module.exports = {
       'WEBGL_RENDERER': JSON.stringify(true)
     }),
     new HtmlWebpackPlugin({
-      template: './index.html'
+      template: './index.html',
+      favicon: './assets/favicon.ico'
     }),
     new CopyPlugin({
       patterns: [
         {
           from: path.resolve(__dirname, 'assets'),
           to: path.resolve(__dirname, 'build/assets')
+        },
+        {
+          from: path.resolve(__dirname, 'manifest.json'),
+          to: path.resolve(__dirname, 'build')
         }
       ],
     })
