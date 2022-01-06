@@ -1,11 +1,11 @@
 {
-    "name": "Flap Bird Clone",
-    "description": "Just a flap bird clone",
+    "name": "Flappy Bird Clone",
+    "description": "Just a flappy bird clone",
     "version": "0.1",
     "manifest_version": 2,
     "icons": {
-        "16": "./assets/bird-16.png",
-        "128": "./assets/bird-128.png"
+        "16": "assets/bird-16.png",
+        "128": "assets/bird-128.png"
     },
     "display": "fullscreen",
     "orientation": "portrait"
